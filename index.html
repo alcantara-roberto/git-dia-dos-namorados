@@ -2,43 +2,91 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nosso Amor ❤️</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(to bottom right, #ffb6c1, #ff69b4);
+      background: #ffb6c1;
+      background-image: url('https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/fundo-romantico.jpeg');
       background-size: cover;
+      background-attachment: fixed;
       color: white;
       text-align: center;
-      padding: 50px 20px;
-      background-image: url('https://i.imgur.com/zGsAvfg.png');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
+      padding: 20px;
+      overflow-x: hidden;
     }
 
     h1 {
-      font-size: 3em;
-      margin-top: 20px;
+      font-size: 2.5em;
+      margin-top: 10px;
     }
 
     .contador {
-      font-size: 2em;
-      margin: 30px 0;
+      font-size: 1.5em;
+      margin: 20px 0;
     }
 
-    .foto {
-      width: 250px;
-      border-radius: 20px;
+    .carrossel {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      margin: auto;
       border: 4px solid white;
-      margin: 10px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .carrossel img {
+      width: 100%;
+      display: none;
+      border-radius: 20px;
+    }
+
+    .carrossel img.ativo {
+      display: block;
     }
 
     footer {
-      margin-top: 50px;
+      margin-top: 40px;
       font-size: 0.9em;
       opacity: 0.8;
+    }
+
+    /* Neve de corações */
+    .heart {
+      position: fixed;
+      top: -10px;
+      color: #ff3366;
+      font-size: 20px;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      .contador {
+        font-size: 1.2em;
+      }
     }
   </style>
 </head>
@@ -47,10 +95,16 @@
   <h1>💖 Nosso Amor 💖</h1>
   <p class="contador" id="contador">Carregando...</p>
 
-  <img class="foto" src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor.jpeg" alt="Foto 1">
-  <img class="foto" src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor2.jpeg" alt="Foto 2">
+  <div class="carrossel" id="carrossel">
+    <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor.jpeg" class="ativo" alt="Foto 1">
+    <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor2.jpeg" alt="Foto 2">
+    <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor3.jpeg" alt="Foto 3">
+    <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor4.jpeg" alt="Foto 4">
+    <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor5.jpeg" alt="Foto 5">
+    <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor6.png" alt="Foto 6">
+    <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor7.png" alt="Foto 7">
+  </div>
 
-  <!-- Música com fallback de formatos -->
   <audio autoplay loop>
     <source src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/aerosmith.mp4" type="audio/mp4">
     <source src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/aerosmith.mpeg" type="audio/mpeg">
@@ -58,39 +112,52 @@
   </audio>
 
   <footer>
-    Feito com ❤️ por nós<br>
+    Feito com ❤️<br>
     Desde 10/05/2025 às 21:50
   </footer>
 
   <script>
+    // Contador
     const dataInicio = new Date("2025-05-10T21:50:00-03:00");
-
     function atualizarContador() {
       const agora = new Date();
       let diff = agora - dataInicio;
-
       if (diff < 0) {
         document.getElementById("contador").innerText = "Ainda não começamos oficialmente 💫";
         return;
       }
-
       const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
       diff %= (1000 * 60 * 60 * 24);
-
       const horas = Math.floor(diff / (1000 * 60 * 60));
       diff %= (1000 * 60 * 60);
-
       const minutos = Math.floor(diff / (1000 * 60));
       diff %= (1000 * 60);
-
       const segundos = Math.floor(diff / 1000);
-
       document.getElementById("contador").innerText =
         `${dias} dias, ${horas}h ${minutos}m ${segundos}s juntos 💘`;
     }
-
     atualizarContador();
     setInterval(atualizarContador, 1000);
+
+    // Carrossel
+    let indice = 0;
+    const imagens = document.querySelectorAll('#carrossel img');
+    setInterval(() => {
+      imagens[indice].classList.remove('ativo');
+      indice = (indice + 1) % imagens.length;
+      imagens[indice].classList.add('ativo');
+    }, 3000);
+
+    // Corações caindo
+    setInterval(() => {
+      const coracao = document.createElement('div');
+      coracao.className = 'heart';
+      coracao.style.left = Math.random() * 100 + 'vw';
+      coracao.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      coracao.innerText = '💖';
+      document.body.appendChild(coracao);
+      setTimeout(() => coracao.remove(), 5000);
+    }, 300);
   </script>
 
 </body>
