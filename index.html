@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nosso Amor ❤️</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: #ffb6c1;
+      background: #fff0f0;
       background-image: url('https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/fundo-romantico.jpeg');
       background-size: cover;
       background-attachment: fixed;
-      color: white;
+      color: #000;
       text-align: center;
       padding: 20px;
       overflow-x: hidden;
@@ -37,7 +34,7 @@
       width: 100%;
       max-width: 400px;
       margin: auto;
-      border: 4px solid white;
+      border: 4px solid #000;
       border-radius: 20px;
       overflow: hidden;
     }
@@ -52,13 +49,6 @@
       display: block;
     }
 
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      opacity: 0.8;
-    }
-
-    /* Neve de corações */
     .heart {
       position: fixed;
       top: -10px;
@@ -69,24 +59,31 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    button#playPause {
+      margin: 20px auto;
+      display: block;
+      padding: 10px 20px;
+      font-size: 1em;
+      background: #ff3366;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
-      h1 {
-        font-size: 2em;
-      }
-
-      .contador {
-        font-size: 1.2em;
-      }
+      h1 { font-size: 2em; }
+      .contador { font-size: 1.2em; }
     }
   </style>
 </head>
@@ -94,6 +91,8 @@
 
   <h1>💖 Nosso Amor 💖</h1>
   <p class="contador" id="contador">Carregando...</p>
+
+  <button id="playPause">🎵 Tocar música</button>
 
   <div class="carrossel" id="carrossel">
     <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor.jpeg" class="ativo" alt="Foto 1">
@@ -105,19 +104,18 @@
     <img src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/foto-nosso-amor7.png" alt="Foto 7">
   </div>
 
-  <audio autoplay loop>
-    <source src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/aerosmith.mp4" type="audio/mp4">
-    <source src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/aerosmith.mpeg" type="audio/mpeg">
-    Seu navegador não suporta áudio.
-  </audio>
-
   <footer>
     Feito com ❤️<br>
     Desde 10/05/2025 às 21:50
   </footer>
 
+  <audio id="musica" loop>
+    <source src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/aerosmith.mp4" type="audio/mp4">
+    <source src="https://raw.githubusercontent.com/alcantara-roberto/git-dia-dos-namorados/main/aerosmith.mpeg" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
+
   <script>
-    // Contador
     const dataInicio = new Date("2025-05-10T21:50:00-03:00");
     function atualizarContador() {
       const agora = new Date();
@@ -148,7 +146,7 @@
       imagens[indice].classList.add('ativo');
     }, 3000);
 
-    // Corações caindo
+    // Neve de corações
     setInterval(() => {
       const coracao = document.createElement('div');
       coracao.className = 'heart';
@@ -158,6 +156,22 @@
       document.body.appendChild(coracao);
       setTimeout(() => coracao.remove(), 5000);
     }, 300);
+
+    // Música com botão play/pause
+    const audio = document.getElementById('musica');
+    const btn = document.getElementById('playPause');
+    let tocando = false;
+    btn.addEventListener('click', () => {
+      if (!tocando) {
+        audio.play();
+        btn.textContent = '⏸️ Pausar música';
+        tocando = true;
+      } else {
+        audio.pause();
+        btn.textContent = '🎵 Tocar música';
+        tocando = false;
+      }
+    });
   </script>
 
 </body>
